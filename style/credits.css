@@ -1,0 +1,63 @@
+/* Base styles for body to set font and background */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #F5F5DC; /* off-white beige background */
+    color: #800020; /* deep red for text */
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Container to center and frame the content */
+  .credits-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff; /* white background for contrast */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+    border: 1px solid #D4AF37; /* gold border */
+    border-radius: 8px;
+  }
+  
+  /* Styling for headers to emphasize section breaks */
+  h1, h2 {
+    color: #800020; /* deep red for headers */
+  }
+  
+  /* Unordered list style for clean presentation */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* List items with a hover effect for interactivity */
+  li {
+    background-color: #fff; /* white background for list items */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 5px solid #D4AF37; /* gold accent on the side */
+    transition: transform 0.3s ease; /* smooth transition for interaction */
+  }
+  
+  li:hover {
+    transform: translateY(-3px); /* slight raise effect on hover */
+  }
+  
+  /* Links styled to fit the color theme */
+  a {
+    color: #D4AF37; /* gold color for links */
+    text-decoration: none; /* no underline for a clean look */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* underline on hover for clarity */
+  }
+  
+  /* Footer style if needed */
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #D4AF37; /* gold for footer text */
+  }
+  

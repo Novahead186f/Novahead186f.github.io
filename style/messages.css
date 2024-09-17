@@ -1,0 +1,73 @@
+/* messages.css */
+#messages {
+    margin-top: 20px;
+  }
+  
+  .message {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .message img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .message-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-content p {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .message-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .message-actions .icon {
+    display: inline-block;  /* Ensures the span acts as a block and allows width and height */
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .message-actions .upvote {
+    background-image: url('../media/upvote-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  .message-actions .downvote {
+    background-image: url('../media/downvote-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  .message-actions .delete {
+    background-image: url('../media/delete-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  

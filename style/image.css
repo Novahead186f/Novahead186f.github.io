@@ -1,0 +1,36 @@
+/* Image Display Section */
+#image-display {
+    margin: 40px auto;
+    text-align: center;
+    max-width: 600px;
+    border: 2px solid #D4AF37;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #F5F5DC;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .image-info {
+    margin-top: 20px;
+  }
+  
+  #image-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #800020;
+  }
+  
+  #image-author {
+    font-size: 16px;
+    color: #D4AF37;
+  }
+  
+  .image-controls {
+    margin-top: 20px;
+  }
+  

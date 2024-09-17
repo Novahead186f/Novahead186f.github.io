@@ -1,0 +1,100 @@
+/* General styles */
+html {
+  overflow: -moz-scrollbars-vertical;
+}
+
+body {
+  background: #F5F5DC;
+  font-family: 'Verdana', 'Courier New', 'Tahoma', sans-serif;
+  font-size: 14px;
+  color: #800020;
+  text-align: left;
+  max-width: 80%;
+  margin: auto;
+}
+
+/* Header and title styles */
+header {
+  display: flex;
+  margin-top: 36px;
+  height: 64px;
+  justify-content: flex-end;
+  position: relative; /* Make the header the containing block for positioning */
+}
+
+/* Keyframes for the title animation */
+@keyframes fancyTitleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95); /* Start slightly lower and smaller */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1); /* End at normal size and position */
+  }
+}
+
+header #title {
+  color: #800020;
+  text-decoration: none;
+  margin: 0px;
+  width: 100%;
+  font-size: 48px;
+  font-weight: bold; /* Make the title bold for a more elegant feel */
+  font-family: 'Georgia', 'Times New Roman', 'Palatino', serif; /* Apply built-in serif fonts */
+  text-align: center; /* Center the title */
+  letter-spacing: 1.5px; /* Slightly increased letter spacing for elegance */
+  animation: fancyTitleAnimation 1.2s ease-in-out; /* Applying the animation */
+  transition: all 0.3s ease-in-out; /* Transition for hover effects */
+}
+
+header #title:hover {
+  transform: scale(1.05); /* Slightly scale up the title on hover */
+  color: #D4AF37; /* Change title color to gold on hover */
+}
+
+/* Button styles (for Add Image and Add Comment buttons) */
+#add-image-btn, #add-comment-btn, .nav-btn, .delete-btn {
+  font-size: 16px;
+  padding: 12px 24px;
+  background-color: #800020;
+  color: #D4AF37;
+  border: 2px solid #D4AF37;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s ease; /* Add transition effects */
+}
+
+#add-image-btn:hover, #add-comment-btn:hover, .nav-btn:hover, .delete-btn:hover {
+  background-color: #311018;
+  color: #F5F5DC;
+  transform: scale(1.05); /* Slightly scale the button on hover */
+}
+
+#add-image-btn:active, #add-comment-btn:active, .nav-btn:active, .delete-btn:active {
+  transform: scale(0.98); /* Press effect for button */
+}
+
+/* Positioning for the Add Image button */
+#add-image-btn {
+  position: absolute;
+  right: 10px;
+  top: 36px;
+}
+
+/* Positioning for the Add Comment button */
+#add-comment-btn {
+  position: absolute;
+  left: 10px;
+  top: 36px;
+}
+
+/* Footer and alert styles */
+footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alert {
+  color: red;
+}

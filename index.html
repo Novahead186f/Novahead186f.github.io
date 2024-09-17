@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>The Web Gallery</title>
+    <link href="style/main.css" rel="stylesheet" type="text/css" />
+    <link href="style/form.css" rel="stylesheet" type="text/css" />
+    <link href="style/messages.css" rel="stylesheet" type="text/css" />
+    <link href="style/comments.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" id="title">The Web Gallery</a>
+      <button id="add-image-btn" class="header_btn">Add Image</button>
+    </header>
+
+    <form class="complex_form" id="create_message_form" style="display: none;">
+      <div class="form_title">Post An Image</div>
+      <input
+        type="text"
+        class="form_element"
+        placeholder="Enter the image title"
+        name="user_name"
+        required
+      />
+
+      <input
+        type="text"
+        class="form_element"
+        placeholder="Enter author's name"
+        name="author_name"
+        required
+      />
+      
+      <textarea
+        class="form_element" 
+        placeholder="Enter your image's url" 
+        name="url" 
+        required
+      ></textarea>
+
+      <button
+        type="submit"
+        class="btn"
+      >Submit</button>
+    </form>
+
+    <!-- Image Display Section -->
+    <section id="image-display">
+      <div class="image-container">
+        <img id="current-image" src="" alt="" />
+      </div>
+      <div class="image-info">
+        <h2 id="image-title"></h2>
+        <p id="image-author"></p>
+      </div>
+      <div class="image-controls">
+        <button id="prev-btn" class="nav-btn">Previous</button>
+        <button id="next-btn" class="nav-btn">Next</button>
+        <button id="delete-btn" class="delete-btn">Delete</button>
+      </div>
+    </section>
+
+    <!-- Comment Section -->
+    <div id="comments-section"></div>
+    <form class="complex_form" id="comment-form">
+      <div class="form_title">Add a Comment</div>
+      <input type="text" class="form_element" id="comment-author" placeholder="Enter your name" required />
+      <textarea class="form_element" id="comment-text" placeholder="Enter your comment" required></textarea>
+      <button id="submit-comment-btn" class="btn">Submit Comment</button>
+    </form>
+
+    
+      <!-- Navigation for Older/More Recent Comments -->
+      <div id="comment-navigation">
+        <button class="nav-btn">Older Comments</button>
+        <button class="nav-btn">More Recent Comments</button>
+      </div>
+    </section>
+
+    <footer>
+      <a href="/credits.html">credits</a>
+    </footer>
+
+    <script type="module" src="js/controller.mjs"></script>
+
+    <div id="success-message" style="display: none; color: #800020; font-size: 16px; text-align: center; margin-top: 20px;">
+      Image added successfully!
+    </div>
+    
+  </body>
+</html>
