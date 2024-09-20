@@ -42,7 +42,7 @@
 
 #comment-form input[type="text"]:hover, #comment-form input[type="text"]:focus, 
 #comment-form textarea:hover, #comment-form textarea:focus {
-    background-color: #FFF6E6; /* Lighter beige on hover/focus */
+    background-color: #FFF6E6; /* Lighter beige on hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow for focus */
     border-color: #800020; /* Change border to burgundy on focus */
     outline: none; /* Remove default outline */

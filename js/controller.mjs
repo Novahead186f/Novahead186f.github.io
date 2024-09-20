@@ -6,7 +6,6 @@ let currentCommentPage = 1; // Track the comment pagination
 // Initialize gallery and display the first image
 function initGallery() {
     const images = getImages();
-    console.log('Initializing gallery with images:', images);
     if (images.length > 0) {
         displayImage(images[0]);
         document.getElementById('image-display').style.display = 'block';
@@ -15,7 +14,6 @@ function initGallery() {
         document.getElementById('comment-form').style.display = 'none'; // Hide the comment form
         document.getElementById('comments-section').style.display = 'none'; // Hide the comments section
         document.getElementById('comment-navigation').style.display = 'none'; // Hide the comment navigation buttons
-        // Additionally hide any other sections that should not be visible when the gallery is empty
     }
 }
 
@@ -66,8 +64,6 @@ function setCurrentCommentPageToMostRecent(imageId) {
 }
 
 function loadComments(imageId) {
-    console.log(`Loading comments for imageId: ${imageId}, currentCommentPage: ${currentCommentPage}`);
-
     // Fetch paginated comments and total comments count
     const { comments, totalComments } = getCommentsByImage(imageId, currentCommentPage);
     const totalPages = Math.ceil(totalComments / 10);
@@ -174,8 +170,6 @@ document.getElementById('create_message_form').addEventListener('submit', functi
     const author = this.querySelector('input[name="author_name"]').value;
     const url = this.querySelector('textarea[name="url"]').value;
     
-    console.log('Submitting image with title, author, url:', title, author, url);
-    
     // Add the image
     const newImage = addImage(title, author, url);
     
@@ -190,10 +184,7 @@ document.getElementById('create_message_form').addEventListener('submit', functi
     document.getElementById('create_message_form').style.display = 'none';
     document.getElementById('add-image-btn').textContent = 'Add Image';
     document.getElementById('image-display').style.display = 'block';
-    
-    console.log('Attempting to reset the form...');
-    this.reset();  // This should clear the form
-    console.log('Form reset complete');
+    this.reset();  //clear the form
     
     // Display the success message
     const successMessage = document.getElementById('success-message');
@@ -216,9 +207,7 @@ document.getElementById('comment-form').addEventListener('submit', function (e) 
     e.preventDefault();
     const author = this.querySelector('#comment-author').value;
     const content = this.querySelector('#comment-text').value;
-    console.log('Submitting comment with author and content:', author, content);
     const currentImage = getImages()[currentImageIndex];
-    console.log('Current Image for comment:', currentImage);
     addComment(currentImage.imageId, author, content);
     loadComments(currentImage.imageId);
     this.reset();
@@ -229,7 +218,7 @@ document.getElementById('prev-btn').addEventListener('click', function () {
         currentImageIndex--;
         const currentImage = getImages()[currentImageIndex];
         displayImage(currentImage);
-        loadComments(currentImage.imageId); // Load comments for the new image
+        loadComments(currentImage.imageId); // Load comments for the image
     }
 });
 
@@ -238,7 +227,7 @@ document.getElementById('next-btn').addEventListener('click', function () {
         currentImageIndex++;
         const currentImage = getImages()[currentImageIndex];
         displayImage(currentImage);
-        loadComments(currentImage.imageId); // Load comments for the new image
+        loadComments(currentImage.imageId); // Load comments for the image
     }
 });
 
@@ -273,7 +262,6 @@ function clearImageDisplay() {
     document.getElementById('current-image').src = ""; // Clear the image source
     document.getElementById('image-title').innerText = ""; // Clear the image title
     document.getElementById('image-author').innerText = ""; // Clear the image author
-    // Optionally, you might want to clear or hide the comments section too
     document.getElementById('comments-section').innerHTML = ""; // Clear any comments
 }
 
@@ -285,7 +273,6 @@ document.querySelector('#comment-navigation .nav-btn:first-of-type').addEventLis
 
     if (currentCommentPage < totalPages) {
         currentCommentPage++;
-        console.log(`"Older Comments" clicked, currentCommentPage: ${currentCommentPage}`);
         loadComments(currentImage.imageId); // Load the older comments (next page)
     }
 });
@@ -294,7 +281,6 @@ document.querySelector('#comment-navigation .nav-btn:first-of-type').addEventLis
 document.querySelector('#comment-navigation .nav-btn:last-of-type').addEventListener('click', function () {
     if (currentCommentPage > 1) {
         currentCommentPage--;
-        console.log(`"More Recent Comments" clicked, currentCommentPage: ${currentCommentPage}`);
         const currentImage = getImages()[currentImageIndex];
         loadComments(currentImage.imageId); // Load the more recent comments (previous page)
     }
