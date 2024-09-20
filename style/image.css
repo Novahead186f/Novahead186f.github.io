@@ -1,36 +1,59 @@
 /* Image Display Section */
 #image-display {
-    margin: 40px auto;
-    text-align: center;
-    max-width: 600px;
-    border: 2px solid #D4AF37;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #F5F5DC;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .image-container img {
+  margin: 40px auto;
+  text-align: center;
+  max-width: 600px;
+  border: 2px solid #D4AF37;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #F5F5DC;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+    max-width: 500px; /* Fixed width for the frame */
+    max-height: 400px; /* Fixed height for the frame */
+    margin: 0 auto;
+    overflow: hidden; /* Ensures the image doesn't overflow */
+    border: 2px solid #D4AF37; /* Frame border */
+    border-radius: 10px; /* Frame rounded corners */
+}
+
+.image-container img {
     max-width: 100%;
-    border-radius: 10px;
-  }
-  
-  .image-info {
-    margin-top: 20px;
-  }
-  
-  #image-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #800020;
-  }
-  
-  #image-author {
-    font-size: 16px;
-    color: #D4AF37;
-  }
-  
-  .image-controls {
-    margin-top: 20px;
-  }
-  
+    max-height: 100%;
+    width: auto; /* Scale proportionally */
+    height: auto; /* Scale proportionally */
+    border-radius: 10px; /* Match container border-radius */
+}
+
+
+/* Image Styling */
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; /* Ensure the image scales proportionally */
+  height: auto; /* Ensure the image scales proportionally */
+  border-radius: 10px; /* Matches the frame's rounded corners */
+}
+
+/* Image Info */
+.image-info {
+  margin-top: 20px;
+}
+
+#image-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #800020;
+}
+
+#image-author {
+  font-size: 16px;
+  color: #D4AF37;
+}
+
+/* Image Controls */
+.image-controls {
+  margin-top: 20px;
+}

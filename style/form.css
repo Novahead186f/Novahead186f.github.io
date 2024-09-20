@@ -25,7 +25,7 @@
   border-radius: 7px 7px 0px 0px;
   letter-spacing: 1px; /* Add slight letter spacing for a more elegant look */
   font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
-  width: 100%; /* Ensure title spans the full width */
+  width: 99.6%; /* Ensure title spans the full width */
 }
 
 .complex_form .form_element {

@@ -46,8 +46,8 @@ function displayImage(image) {
         commentForm.style.display = 'flex'; // Show comment form
         commentNavigation.style.display = 'block'; // Show navigation buttons
 
-        // Load the comments for the current image
-        loadComments(image.imageId);
+        // Immediately find the most recent page of comments for the displayed image
+        setCurrentCommentPageToMostRecent(image.imageId);
     } else {
         document.getElementById('image-display').style.display = 'none';
         commentsSection.style.display = 'none'; // Hide comments section
@@ -56,15 +56,21 @@ function displayImage(image) {
     }
 }
 
-
-
+function setCurrentCommentPageToMostRecent(imageId) {
+    // Fetch the total number of comments to determine the last page
+    const { totalComments } = getCommentsByImage(imageId, 1); // Fetching any page will give total comments count
+    const pageSize = 10; //The page size is 10
+    const totalPages = Math.ceil(totalComments / pageSize);
+    currentCommentPage = 1; // Set to the last page which will have the most recent comments
+    loadComments(imageId); // Now load the comments for this page
+}
 
 function loadComments(imageId) {
     console.log(`Loading comments for imageId: ${imageId}, currentCommentPage: ${currentCommentPage}`);
 
     // Fetch paginated comments and total comments count
     const { comments, totalComments } = getCommentsByImage(imageId, currentCommentPage);
-    const totalPages = Math.ceil(totalComments / 10); // Display 10 comments per page
+    const totalPages = Math.ceil(totalComments / 10);
 
     // Update the navigation buttons
     updateNavigationButtons(currentCommentPage, totalPages);
@@ -75,7 +81,7 @@ function loadComments(imageId) {
 
     // Display comments or show a "No comments available" message
     if (comments.length > 0) {
-        console.log('Rendering comments: ', comments);
+        console.log('Rendering comments:', comments);
         comments.forEach(comment => {
             const commentElement = document.createElement('div');
             commentElement.classList.add('comment');
@@ -88,14 +94,14 @@ function loadComments(imageId) {
                 </div>`;
             commentsSection.appendChild(commentElement);
         });
-
         commentsSection.style.display = 'block';
-        setupDeleteCommentListeners(); // Set up delete button listeners
+        setupDeleteCommentListeners();
     } else {
         commentsSection.innerHTML = '<p>No comments available.</p>';
-        commentsSection.style.display = 'block'; // Ensure the section is visible even if no comments
+        commentsSection.style.display = 'block';
     }
 }
+
 
 function updateNavigationButtons(currentPage, totalPages) {
     const olderCommentsBtn = document.querySelector('#comment-navigation .nav-btn:first-of-type');
@@ -110,10 +116,56 @@ function setupDeleteCommentListeners() {
         button.addEventListener('click', function () {
             const commentId = this.getAttribute('data-id');
             deleteComment(commentId);
-            loadComments(getImages()[currentImageIndex].imageId);
+            
+            const currentImageId = getImages()[currentImageIndex].imageId;
+
+            // After deletion, check if there are any comments left on the current page
+            const { comments } = getCommentsByImage(currentImageId, currentCommentPage);
+
+            if (comments.length === 0) {
+                // If no comments left on this page, attempt to load the next page with comments
+                findNextPageWithComments(currentImageId);
+            } else {
+                // Otherwise, reload the current page
+                loadComments(currentImageId);
+            }
         });
     });
 }
+
+// Function to find the next page with comments
+function findNextPageWithComments(imageId) {
+    let page = currentCommentPage;
+    const totalComments = getCommentsByImage(imageId).totalComments; // Get total comments
+    const totalPages = Math.ceil(totalComments / 10); // 10 comments per page
+    
+    // Look for more recent pages first (pages with lower numbers)
+    while (page > 1) {
+        page--;
+        const { comments } = getCommentsByImage(imageId, page);
+        if (comments.length > 0) {
+            currentCommentPage = page;
+            loadComments(imageId);
+            return;
+        }
+    }
+    
+    // If no more recent pages, look for older pages
+    page = currentCommentPage;
+    while (page < totalPages) {
+        page++;
+        const { comments } = getCommentsByImage(imageId, page);
+        if (comments.length > 0) {
+            currentCommentPage = page;
+            loadComments(imageId);
+            return;
+        }
+    }
+    
+    // If no comments are left on any page, reload the empty state
+    loadComments(imageId);
+}
+
 
 document.getElementById('create_message_form').addEventListener('submit', function (e) {
     e.preventDefault();
