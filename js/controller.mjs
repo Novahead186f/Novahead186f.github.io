@@ -32,6 +32,9 @@ function displayImage(image) {
     const commentForm = document.getElementById('comment-form');
     const commentsSection = document.getElementById('comments-section');
     const commentNavigation = document.getElementById('comment-navigation');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const images = getImages(); // Get all images
 
     if (image) {
         document.getElementById('current-image').src = image.url;
@@ -44,6 +47,19 @@ function displayImage(image) {
         commentForm.style.display = 'flex'; // Show comment form
         commentNavigation.style.display = 'block'; // Show navigation buttons
 
+        // Show or hide the "Previous" and "Next" buttons
+        if (currentImageIndex <= 0) {
+            prevBtn.style.display = 'none'; // Hide if there is no previous image
+        } else {
+            prevBtn.style.display = 'block'; // Show if there is a previous image
+        }
+
+        if (currentImageIndex >= images.length - 1) {
+            nextBtn.style.display = 'none'; // Hide if there is no next image
+        } else {
+            nextBtn.style.display = 'block'; // Show if there is a next image
+        }
+
         // Immediately find the most recent page of comments for the displayed image
         setCurrentCommentPageToMostRecent(image.imageId);
     } else {
@@ -53,6 +69,7 @@ function displayImage(image) {
         commentNavigation.style.display = 'none'; // Hide navigation buttons
     }
 }
+
 
 function setCurrentCommentPageToMostRecent(imageId) {
     // Fetch the total number of comments to determine the last page
@@ -66,9 +83,9 @@ function setCurrentCommentPageToMostRecent(imageId) {
 function loadComments(imageId) {
     // Fetch paginated comments and total comments count
     const { comments, totalComments } = getCommentsByImage(imageId, currentCommentPage);
-    const totalPages = Math.ceil(totalComments / 10);
+    const totalPages = Math.ceil(totalComments / 10); // 10 comments per page
 
-    // Update the navigation buttons
+    // Update the navigation buttons based on the current page and total pages
     updateNavigationButtons(currentCommentPage, totalPages);
 
     // Clear previous comments
@@ -77,7 +94,6 @@ function loadComments(imageId) {
 
     // Display comments or show a "No comments available" message
     if (comments.length > 0) {
-        console.log('Rendering comments:', comments);
         comments.forEach(comment => {
             const commentElement = document.createElement('div');
             commentElement.classList.add('comment');
@@ -103,9 +119,21 @@ function updateNavigationButtons(currentPage, totalPages) {
     const olderCommentsBtn = document.querySelector('#comment-navigation .nav-btn:first-of-type');
     const moreRecentCommentsBtn = document.querySelector('#comment-navigation .nav-btn:last-of-type');
 
-    olderCommentsBtn.disabled = currentPage >= totalPages;
-    moreRecentCommentsBtn.disabled = currentPage <= 1;
+    // If the current page is the last page, hide the "Older Comments" button
+    if (currentPage >= totalPages) {
+        olderCommentsBtn.style.display = 'none';
+    } else {
+        olderCommentsBtn.style.display = 'block';
+    }
+
+    // If the current page is the first page, hide the "More Recent Comments" button
+    if (currentPage <= 1) {
+        moreRecentCommentsBtn.style.display = 'none';
+    } else {
+        moreRecentCommentsBtn.style.display = 'block';
+    }
 }
+
 
 function setupDeleteCommentListeners() {
     document.querySelectorAll('.delete-btn').forEach(button => {
@@ -205,13 +233,34 @@ function clearCommentsSection() {
 
 document.getElementById('comment-form').addEventListener('submit', function (e) {
     e.preventDefault();
+    
     const author = this.querySelector('#comment-author').value;
     const content = this.querySelector('#comment-text').value;
     const currentImage = getImages()[currentImageIndex];
+    
+    // Add the comment to the current image
     addComment(currentImage.imageId, author, content);
-    loadComments(currentImage.imageId);
+    
+    // After adding the comment, jump to the page where the latest comment should be
+    setCurrentCommentPageToNewestComment(currentImage.imageId);
+    
+    // Clear the form input fields
     this.reset();
 });
+
+function setCurrentCommentPageToNewestComment(imageId) {
+    // Fetch the total number of comments to calculate the last page
+    const { totalComments } = getCommentsByImage(imageId, 1); // Fetching any page will give the total comments count
+    const pageSize = 10; // The page size is 10 comments per page
+    const totalPages = Math.ceil(totalComments / pageSize);
+
+    // Set the current page to the last page, which should contain the newest comment
+    currentCommentPage = 1;
+
+    // Now load the comments for the new page
+    loadComments(imageId);
+}
+
 
 document.getElementById('prev-btn').addEventListener('click', function () {
     if (currentImageIndex > 0) {
